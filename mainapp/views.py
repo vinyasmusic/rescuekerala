@@ -45,7 +45,8 @@ class CreateRequest(CreateView):
         'detailkit_util',
         'needtoilet',
         'detailtoilet',
-        'needothers'
+        'needothers',
+        'additional_phone_numbers'
     ]
     success_url = '/req_sucess/'
 

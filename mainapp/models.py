@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
+
 
 districts = (
     ('alp','Alappuzha - ആലപ്പുഴ'),
@@ -91,6 +93,8 @@ class Request(models.Model):
         default = 'new'
     )
     supply_details = models.CharField(max_length=100, blank=True)
+    additional_phone_numbers = ArrayField(models.CharField(max_length=200), blank=True, default=[],
+                                          verbose_name='Additional phone numbers separated by space')
     dateadded = models.DateTimeField(auto_now_add=True)
 
     def summarise(self):
@@ -113,6 +117,11 @@ class Request(models.Model):
 
     def __str__(self):
         return self.get_district_display() + ' ' + self.location
+
+    def save(self, *args, **kwargs):
+        if self.additional_phone_numbers:
+            self.additional_phone_numbers = self.additional_phone_numbers[0].split(' ')
+        super(Request, self).save(*args, **kwargs)
 
 class Volunteer(models.Model):
     district = models.CharField(
