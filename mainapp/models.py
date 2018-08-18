@@ -1,3 +1,4 @@
+import re
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
@@ -94,7 +95,7 @@ class Request(models.Model):
     )
     supply_details = models.CharField(max_length=100, blank=True)
     additional_phone_numbers = ArrayField(models.CharField(max_length=200), blank=True, default=[],
-                                          verbose_name='Additional phone numbers separated by space')
+                                          verbose_name='Additional phone numbers separated by space - അധിക ഫോൺ നമ്പർ സ്പെയ്സ് കൊണ്ട് വേർതിരിച്ചിരിക്കുന്നു')
     dateadded = models.DateTimeField(auto_now_add=True)
 
     def summarise(self):
@@ -120,7 +121,8 @@ class Request(models.Model):
 
     def save(self, *args, **kwargs):
         if self.additional_phone_numbers:
-            self.additional_phone_numbers = self.additional_phone_numbers[0].split(' ')
+            self.additional_phone_numbers = [item.strip() for item in self.additional_phone_numbers[0].split(' ')
+                                             if item is not '' and re.match("^\+?1?\d{9,15}$", item) is not None]
         super(Request, self).save(*args, **kwargs)
 
 class Volunteer(models.Model):
