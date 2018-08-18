@@ -125,6 +125,11 @@ class Request(models.Model):
                                              if item is not '' and re.match("^\+?1?\d{9,15}$", item) is not None]
         super(Request, self).save(*args, **kwargs)
 
+    def save(self, *args, **kwargs):
+        if self.additional_phone_numbers:
+            self.additional_phone_numbers = self.additional_phone_numbers[0].split(' ')
+        super(Request, self).save(*args, **kwargs)
+
 class Volunteer(models.Model):
     district = models.CharField(
         max_length = 15,
