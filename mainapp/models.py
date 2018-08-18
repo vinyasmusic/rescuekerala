@@ -114,6 +114,8 @@ class Request(models.Model):
             out += "\nKit Requirements :\n {}".format(self.detailkit_util)
         if(len(self.needothers.strip()) != 0):
             out += "\nOther Needs :\n {}".format(self.needothers)
+        if self.additional_phone_numbers:
+            out += "\nAdditional phone numbers :\n {}".format("\n".join(self.additional_phone_numbers))
         return out
 
     def __str__(self):
