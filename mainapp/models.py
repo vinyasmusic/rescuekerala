@@ -120,7 +120,7 @@ class Request(models.Model):
         default = 'new'
     )
     supply_details = models.CharField(max_length=100, blank=True)
-    additional_phone_numbers = ArrayField(models.CharField(max_length=200), blank=True, default=[],
+    additional_phone_numbers = ArrayField(models.CharField(max_length=200), blank=True, default=list,
                                           verbose_name='Additional phone numbers separated by space - അധിക ഫോൺ നമ്പർ സ്പെയ്സ് കൊണ്ട് വേർതിരിച്ചിരിക്കുന്നു')
     dateadded = models.DateTimeField(auto_now_add=True)
 
