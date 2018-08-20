@@ -154,7 +154,8 @@ class Request(models.Model):
     def save(self, *args, **kwargs):
         if self.additional_phone_numbers:
             self.additional_phone_numbers = [item.strip() for item in self.additional_phone_numbers[0].split(' ')
-                                             if item is not '' and re.match("^\+?1?\d{9,15}$", item) is not None]
+                                             if item is not '' and re.match("^((\+91|91|0)[\- ]{0,1})?[456789]\d{9}$",
+                                                                            item) is not None]
         super(Request, self).save(*args, **kwargs)
 
 
