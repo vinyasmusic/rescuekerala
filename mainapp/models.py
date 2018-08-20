@@ -263,6 +263,7 @@ class DistrictManager(models.Model):
     def __str__(self):
         return self.name + ' ' + self.get_district_display()
 
+
 class DistrictNeed(models.Model):
     district = models.CharField(
         max_length = 15,
@@ -291,6 +292,7 @@ class DistrictCollection(models.Model):
     class Meta:
         verbose_name = 'District: Collection'
         verbose_name_plural = 'District: Collections'
+
 
 class RescueCamp(models.Model):
     name = models.CharField(max_length=50,verbose_name="Camp Name - ക്യാമ്പിന്റെ പേര്")
@@ -331,7 +333,7 @@ class RescueCamp(models.Model):
     class Meta:
         verbose_name = 'Relief: Camp'
         verbose_name_plural = "Relief: Camps"
-        
+
 
     def __str__(self):
         return self.name
